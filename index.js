@@ -4,15 +4,42 @@ const { buildSchema } = require('graphql');
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
+
+    type Product{
+        id: ID!
+        name: String
+        price : Int
+        description : String
+    }
+
     type Query {
-        hello: String,
-        nodejs: Int
+        getProduct(id : ID!): Product
     }
 `);
 
+//임시데이터
+const products = [
+    {
+        id: 1,
+        name: '첫번째 제품',
+        price: 2000,
+        description: '맵다'
+    },
+    {
+        id: 2,
+        name: '두번째 제품',
+        price: 4000,
+        description: '짜다'
+    }
+]
+//임시데이터
+
+
+
 const root = {
-    hello: () => 'Hello world!',
-    nodejs: () => 20,
+    getProduct: ({ id }) => products.
+        find(product =>
+            product.id === parseInt(id))
 };
 
 const app = express();

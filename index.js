@@ -64,7 +64,10 @@ const root = {
 
     //인덱싱값을 알아야한다
     updateProduct: ({ id, input }) => {
-        const index = products.findIndex(product => product.id === parseInt(id))
+        const index = products.findIndex(
+            product =>
+                product.id === parseInt(id))
+
         products[index] = {
             id: parseInt(id),
             ...input
@@ -72,8 +75,12 @@ const root = {
         return products[index];
     },
 
+
+    //인덱싱값을 알아야한다
     deleteProduct: ({ id }) => {
-        const index = products.findIndex(product => product.id === parseInt(id))
+        const index = products.findIndex(
+            product =>
+                product.id === parseInt(id))
         products.splice(index, 1)
         return '성공'
     }
@@ -85,6 +92,8 @@ app.use('/graphql', graphqlHTTP({
     rootValue: root,
     graphiql: true,//이것을 true로해서 그래프큐엘 서버를 들어갔을 때 나타난다.
 }));
+
+app.use('/static', express.static('static'));
 
 app.listen(4000, () => {
     console.log('Running a GraphQL API server at localhost:4000/graphql');
@@ -102,4 +111,10 @@ app.listen(4000, () => {
 // {
 //     "query": "mutation updateProduct( $id : ID! , $input: ProductInput! ) { updateProduct( id : $id  , input: $input) { id } }",
 //     "variables": { "id" : 1 ,"input" : { "name" : "수정상품" , "price" : 1000 , "description" : "후후후" } }
+// }
+
+//삭제
+// {
+//     "query": "mutation deleteProduct( $id : ID! ) { deleteProduct( id : $id  )  }",
+//     "variables": { "id" : 1  }
 // }
